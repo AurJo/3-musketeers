@@ -5,14 +5,19 @@ const chalk = require('chalk');
 const ora = require('ora');
 const currencies = require('../lib/currencies.json');
 
+// the list of currencies and their last rates
 const API = 'https://api.fixer.io/latest';
 
+// Configure the conversion with the inputs send by index.js
 const convert = configuration => {
   const {amount, to, from, response, loading} = configuration;
 
   money.base = response.body.base;
   money.rates = response.body.rates;
 
+  /*Test if the currency exists
+  If it is, call the function convert to convert the currency
+  Else, print a warning*/
   to.forEach(item => {
     if (currencies[item]) {
       loading.succeed(
@@ -25,6 +30,7 @@ const convert = configuration => {
     }
   });
 
+  // Print the differents results and the input parameters
   console.log();
   console.log(
     chalk.underline.gray(
@@ -34,6 +40,7 @@ const convert = configuration => {
   process.exit(1);
 };
 
+//Translate yours input parameters into an amount and a currency in uppercase
 const cash = async command => {
   const amount = command.amount;
   const from = command.from.toUpperCase();
@@ -41,6 +48,7 @@ const cash = async command => {
     .filter(item => item !== from)
     .map(item => item.toUpperCase());
 
+// while the program runs, print a message
   console.log();
   const loading = ora({
     'text': 'Converting currency...',
@@ -53,6 +61,10 @@ const cash = async command => {
 
   loading.start();
 
+  // Wait a connection with the API
+  // If it works, runs the function convert
+  // Else print a warning message
+  //If there is an error with convert, print a warning message
   try {
     const response = await got(API, {'json': true});
 

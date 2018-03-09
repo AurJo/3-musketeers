@@ -10,6 +10,10 @@ const argv = process.argv.slice(2);
 
 helpers(argv);
 
+//get in parameters the command
+//the first is the amount or 1
+//the second is the currency or by default USD or save with a new configuration
+//and the currency(ies) by default or save with a new configuration
 const command = {
   'amount': argv[0] || 1,
   'from': argv[1] || config.get('defaultFrom', 'USD'),
