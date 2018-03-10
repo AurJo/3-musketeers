@@ -4,84 +4,130 @@ const convert = require('..');
 const Big = require('big.js');
 
 test('should default to returning then default ifself', () => {
-  //convert(2, 'BTC', 'BTC');
-  throw new Error('test not yet defined... write your test here');
+  expect(convert(2, 'BTC', 'BTC')).toEqual(2);
 });
 
 test('should return a number', () => {
-  //convert(2, 'BTC', 'BTC', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  expect(typeof convert(2, 'BTC', 'BTC', 'Number')).toEqual('number');
 });
 
 test('should return a Big number', () => {
-  //convert(2, 'BTC', 'BTC', 'Big');
-  throw new Error('test not yet defined... write your test here');
+  expect(convert(2, 'BTC', 'BTC', 'Big')).toBeInstanceOf(Big)  ;
 });
 
 test('should return a string', () => {
-  //convert(2100, 'mBTC', 'BTC', 'String');
-  throw new Error('test not yet defined... write your test here');
+  expect( typeof convert(2100, 'mBTC', 'BTC', 'String')).toEqual('string');
 });
 
 test('should convert a number from interger', () => {
-  //convert(123456789012345, 'Satoshi', 'BTC', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  var input = 123456789012345
+  expect((input) => { return input % 1 === 0}).toBeTruthy();   // === 0 alors int
+  var result = convert(input, 'Satoshi', 'BTC', 'Number');
+  expect(typeof result).toEqual('number')
 });
 
 test('should convert a number from float', () => {
-  //convert(1234567.89012345, 'BTC', 'Satoshi', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  var input = 123456789012345
+  expect((input) => { return input % 1 !== 0}).toBeTruthy();  // !== 0 alors float
+  var result = convert(input, 'Satoshi', 'BTC', 'Number');
+  expect(typeof result).toEqual('number')
+
 });
 
 test('should convert a string', () => {
-  //convert('2', 'BTC', 'BTC', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  var input = '2'
+  expect(typeof input).toEqual('string')
+  expect(() => {convert(input, 'BTC', 'BTC', 'Number')}).not.toThrow();
+
 });
 
 test('should convert a Big number', () => {
-  //convert(new Big(2), 'BTC', 'BTC', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  var input = new Big(2)
+  expect(input).toBeInstanceOf(Big); 
+  expect( () => {convert(input, 'BTC', 'BTC', 'Number')}).not.toThrow();
+  
 });
 
 test('should convert a NaN to a number', () => {
-  //convert(NaN, 'BTC', 'BTC', 'Number');
-  //convert(NaN, 'BTC', 'mBTC', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  var input = NaN; 
+  expect(typeof convert(input, 'BTC', 'BTC', 'Number')).toEqual('number');
+  expect(typeof convert(input, 'BTC', 'mBTC', 'Number')).toEqual('number'); 
+  
 });
 
 test('should convert a NaN to a string', () => {
-  //convert(NaN, 'BTC', 'BTC', 'String');
-  //convert(NaN, 'BTC', 'mBTC', 'String');
-  throw new Error('test not yet defined... write your test here');
+  var input = NaN; 
+  expect(typeof convert(input, 'BTC', 'BTC', 'String')).toEqual('string');
+  expect(typeof convert(input, 'BTC', 'mBTC', 'String')).toEqual('string');
+  
 });
 
 test('should not convert a NaN to a Big', () => {
-  //convert(NaN, 'BTC', 'BTC', 'Big');
-  throw new Error('test not yet defined... write your test here');
+  var input = NaN; 
+  expect(() => {convert(input, 'BTC', 'BTC', 'Big')}).toThrow();
+  expect(() => { convert(input, 'BTC', 'mBTC', 'Big')}).toThrow();
 });
 
 test('should handle rounding errors', () => {
-  //convert(4.6, 'Satoshi', 'BTC', 'Number');
-  //convert(0.000000046, 'BTC', 'Satoshi', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  var input1 = 4.6; 
+  var input2 = 0.000000046  
+  var result1 = convert(input1, 'Satoshi', 'BTC', 'Number');
+  var result2 = convert(input2, 'BTC', 'Satoshi', 'Number');
+  expect(result1).toEqual(input2); 
+  expect(result2).toEqual(input1); 
+  
 });
 
 test('should throw when untest is undefined', () => {
-  //convert(new Big(2), 'x', 'BTC', 'Number');
-  //convert(new Big(2), 'BTC', 'x', 'Number');
-  //convert(NaN, 'x', 'BTC', 'Number');
-  //convert(NaN, 'BTC', 'x', 'Number');
-  throw new Error('test not yet defined... write your test here');
+  expect(() => {convert(new Big(2), 'x', 'BTC', 'Number')}).toThrow();
+  expect(() => {convert(new Big(2), 'BTC', 'x', 'Number')}).toThrow();
+  expect(() => {convert(NaN, 'x', 'BTC', 'Number')}).toThrow();
+  expect(() => {convert(NaN, 'BTC', 'x', 'Number')}).toThrow();
 });
 
 test('should throw when representaion is undefined', () => {
-  //convert(2, 'BTC', 'mBTC', 'x');
-  //convert(NaN, 'BTC', 'mBTC', 'x');
-  throw new Error('test not yet defined... write your test here');
+  expect(() => {convert(2, 'BTC', 'mBTC', 'x')}).toThrow();
+  expect(() => {convert(NaN, 'BTC', 'mBTC', 'x')}).toThrow();
+  
 });
 
 test('should allow untest aliases', () => {
-  //convert(4.6, 'Satoshi', 'sat');
-  //convert(4.6, 'μBTC', 'bit');
-  throw new Error('test not yet defined... write your test here');
+  expect(() => {convert(4.6, 'Satoshi', 'sat')}).not.toThrow();
+  expect(() => {convert(4.6, 'μBTC', 'bit')}).not.toThrow();
+
 });
+
+test('should return an array of units', () => {
+  var unitArray = ['BTC','mBTC','μBTC','bit','Satoshi','sat']
+  expect(convert.units()).toEqual(unitArray); 
+})
+
+test('Adds a new unit for conversion in the array', () => {
+  var newUnit = 'finney'; 
+  var newFactor =  new Big(0.0000001); 
+  convert.addUnit(newUnit, newFactor); 
+  var newArray = ['BTC','mBTC','μBTC','bit','Satoshi','sat','finney']; 
+  expect(convert.units()).toEqual(newArray); 
+})
+
+test('Should throws when unit already exists and the factors are different', () => {
+  var newUnit = 'BTC'; 
+  var newFactor =  new Big(3); 
+  expect( () => {convert.addUnit(newUnit, newFactor)}).toThrow();
+})
+
+test('Should removes the unit from conversion', () => {
+  var newUnit = 'finney'; 
+  var newFactor =  new Big(0.0000001); 
+  convert.addUnit(newUnit, newFactor); 
+  var newArray = ['BTC','mBTC','μBTC','bit','Satoshi','sat','finney']; 
+  expect(convert.units()).toEqual(newArray); 
+  convert.removeUnit(newUnit); 
+  var unitArray = ['BTC','mBTC','μBTC','bit','Satoshi','sat']; 
+  expect(convert.units()).toEqual(unitArray);
+})
+
+test('Should throws when unit is pre-defined', () => {
+  var unitRemove = 'mBTC'; 
+  expect (() => {convert.removeUnit(unitRemove)}).toThrow(); 
+})

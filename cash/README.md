@@ -31,7 +31,7 @@ Convert your money into an other currency
 ❯ cd /path/to/workspace
 ❯ git clone git@github.com:YOUR_USERNAME/3-musketeers.git
 ```
-##Dependencies
+## Dependencies
 
 * Go to your repository
 * Install the dependencies
@@ -42,12 +42,12 @@ Convert your money into an other currency
 ```
 
 You can verify yours dependencies going to [cash/package.json]. You will see your dependencies. You must have :
-		* chalk
-		* conf
-		* got
-		* money
-		* ora
-		* update-notifier
+* chalk
+* conf
+* got
+* money
+* ora
+* update-notifier
 
 ## Usage
 
@@ -63,6 +63,7 @@ To convert an amount into a currency
 You can find the list of currencies : http://akep.us/currencies
 
 #### Examples of conversion
+
 ```sh
 > node index.js 1 usd
 > node index.js 1 usd eur pln aud
@@ -77,8 +78,9 @@ To run others commands
 ```
 
 #### Examples of commands
+
 ```sh
 > node index.js --save, -s         Save currencies as default currencies
 > node index.js --help, -h         Display help message
-> node index.js --version, -v   Display version number
+> node index.js --version, -v      Display version number
 ```
